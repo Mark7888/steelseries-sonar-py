@@ -16,12 +16,15 @@ class Sonar:
         "coreProps.json",
     )
 
-    def __init__(self, streamer_mode=False):
+    def __init__(self, streamer_mode=False, app_data_path=None):
         requests.packages.urllib3.disable_warnings()
 
         self.streamer_mode = streamer_mode
         if self.streamer_mode:
             self.volume_path = "/volumeSettings/streamer/monitoring"
+
+        if app_data_path is not None:
+            self.app_data_path = app_data_path
 
         self.load_base_url()
         self.load_server_address()
