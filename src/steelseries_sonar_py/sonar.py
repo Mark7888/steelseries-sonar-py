@@ -6,9 +6,15 @@ import os
 class Sonar:
     # chatCapture -> mic
     channel_names = [ "master", "game", "chatRender", "chatCapture", "media", "aux" ]
+    volume_path = "/volumeSettings/classic"
 
-    def __init__(self):
+    def __init__(self, streamer_mode=False):
         requests.packages.urllib3.disable_warnings()
+
+        self.streamer_mode = streamer_mode
+        if self.streamer_mode:
+            self.volume_path = "/volumeSettings/streamer/monitoring"
+
         self.load_base_url()
         self.load_server_address()
     
@@ -46,7 +52,7 @@ class Sonar:
         return True
     
     def get_volume_data(self):
-        volume_info_url = self.web_server_address + "/volumeSettings/classic"
+        volume_info_url = self.web_server_address + self.volume_path
         volume_data = requests.get(volume_info_url)
         if volume_data.status_code != 200:
             print(f'Sonar server not accessible! Status code: {volume_data.status_code}')
@@ -62,7 +68,7 @@ class Sonar:
         if volume < 0 or volume > 1:
             return {"error": True, "message": f"Invalid volume '{volume}'! Value must be between 0 and 1!"}
         
-        url = f'{self.web_server_address}/volumeSettings/classic/{channel}/Volume/{json.dumps(volume)}'
+        url = f'{self.web_server_address}{self.volume_path}/{channel}/Volume/{json.dumps(volume)}'
         volume_data = requests.put(url)
 
         return json.loads(volume_data.text)
@@ -73,7 +79,7 @@ class Sonar:
 
         muted = (muted == True)
         
-        url = f'{self.web_server_address}/volumeSettings/classic/{channel}/Mute/{json.dumps(muted)}'
+        url = f'{self.web_server_address}{self.volume_path}/{channel}/Mute/{json.dumps(muted)}'
         mute_data = requests.put(url)
 
         return json.loads(mute_data.text)        
