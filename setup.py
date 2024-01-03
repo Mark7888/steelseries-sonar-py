@@ -44,7 +44,7 @@ setuptools.setup(
         'Programming Language :: Python :: 3.12',
         'Programming Language :: Python :: 3 :: Only',
         'License :: OSI Approved :: MIT License',
-        'Operating System :: Windows',
+        'Operating System :: Microsoft :: Windows',
     ],
     python_requires='>=3',
 )
