@@ -1,10 +1,10 @@
-[![publish](https://github.com/Mark7888/steelseries-sonar-py/actions/workflows/publish.yml/badge.svg?event=push)](https://github.com/Mark7888/steelseries-sonar-py/actions/workflows/publish.yml)
-
 # SteelSeries Sonar Python API
+[![publish](https://github.com/Mark7888/steelseries-sonar-py/actions/workflows/publish.yml/badge.svg)](https://github.com/Mark7888/steelseries-sonar-py/actions/workflows/publish.yml)
 
 ## Overview
 
-This Python package provides a convenient interface for interacting with the SteelSeries Sonar application API. The Sonar application allows users to control and display volumes for various audio channels.
+This Python package provides a convenient interface for interacting with the [SteelSeries Sonar](https://steelseries.com/gg/sonar) application API. The Sonar application allows users to control and display volumes for various audio channels.
+You can check the project [PyPI site](https://pypi.org/project/steelseries-sonar-py/) here!
 
 ## Installation
 
