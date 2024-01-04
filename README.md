@@ -1,4 +1,5 @@
 [![publish](https://github.com/Mark7888/steelseries-sonar-py/actions/workflows/publish.yml/badge.svg?event=push)](https://github.com/Mark7888/steelseries-sonar-py/actions/workflows/publish.yml)
+[![Downloads](https://static.pepy.tech/badge/steelseries-sonar-py)](https://pepy.tech/project/steelseries-sonar-py)
 
 # SteelSeries Sonar Python API
 
@@ -111,3 +112,7 @@ muted = `True`
 result = sonar.mute_channel(channel, muted)
 print(f"Mute {channel}:", result)
 ```
+
+## Special Thanks
+
+Thanks to two contributors who made this package possible - [wex](https://github.com/wex/sonar-rev) for figuring out the API and [superRandomGuy941](https://github.com/Mark7888/steelseries-sonar-py/issues/1) for understanding streamer mode. Grateful for their efforts!
