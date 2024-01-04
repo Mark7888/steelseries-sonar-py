@@ -62,7 +62,7 @@ Toggle mute status for a specific channel. The `channel` parameter should be one
 
 ```python
 channel = "game"
-muted = `True`
+muted = True
 
 result = sonar.mute_channel(channel, muted)
 print(result)
@@ -108,7 +108,7 @@ print(f"Set volume for {channel}:", result)
 
 # Mute the 'game' channel
 channel = "game"
-muted = `True`
+muted = True
 result = sonar.mute_channel(channel, muted)
 print(f"Mute {channel}:", result)
 ```
