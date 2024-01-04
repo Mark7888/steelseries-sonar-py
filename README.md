@@ -115,4 +115,4 @@ print(f"Mute {channel}:", result)
 
 ## Special Thanks
 
-Thanks to two contributors who made this package possible - [wex](https://github.com/wex/sonar-rev) for figuring out the API and [superRandomGuy941](https://github.com/Mark7888/steelseries-sonar-py/issues/1) for understanding streamer mode. Grateful for their efforts!
+Thanks to two contributors who made this package possible - [wex](https://github.com/wex/sonar-rev) for figuring out the API and [TotalPanther317](https://github.com/TotalPanther317/steelseries-sonar-py) for understanding streamer mode. Grateful for their efforts!
