@@ -70,7 +70,7 @@ print(result)
 
 ### Chatmix
 
-Chatmix value between `-1 and 1`:
+Chatmix value between `-1 and 1` to focus sound from the `game` or `chatRender` channel:
 
 ```python
 result = sonar.chat_mix(0.5)
