@@ -90,3 +90,13 @@ class Sonar:
         mute_data = requests.put(url)
 
         return json.loads(mute_data.text)
+
+    def chat_mix(self, mix_volume):
+        if mix_volume < -1 or mix_volume > 1:
+            raise ex.InvalidMixVolumeError(mix_volume)
+        
+        url = f"{self.web_server_address}/chatMix?balance={json.dumps(mix_volume)}"
+        print(url)
+        volume_data = requests.put(url)
+
+        return json.loads(volume_data.text)

@@ -68,6 +68,15 @@ result = sonar.mute_channel(channel, muted)
 print(result)
 ```
 
+### Chatmix
+
+Chatmix value between `-1 and 1` to focus sound from the `game` or `chatRender` channel:
+
+```python
+result = sonar.chat_mix(0.5)
+print(result)
+```
+
 ## Exceptions
 
 The package introduces a set of exceptions that might be raised during usage. It is advisable to handle these exceptions accordingly in your code. You can import them from `steelseries_sonar_py.exceptions`. Here is the list of potential exceptions:

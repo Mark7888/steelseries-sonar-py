@@ -45,3 +45,10 @@ class InvalidVolumeError(Exception):
 
     def __str__(self):
         return f"Invalid volume '{self.volume}'! Value must be between 0 and 1!"
+
+class InvalidMixVolumeError(Exception):
+    def __init__(self, mix_volume):
+        self.mix_volume = mix_volume
+
+    def __str__(self):
+        return f"Invalid mix volume '{self.mix_volume}'! Value must be between -1 and 1!"
