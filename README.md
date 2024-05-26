@@ -89,6 +89,7 @@ The package introduces a set of exceptions that might be raised during usage. It
 - `WebServerAddressNotFoundError`: Raised when the web server address is not found.
 - `ChannelNotFoundError`: Raised when the specified channel is not found.
 - `InvalidVolumeError`: Raised when an invalid volume value is provided.
+- `InvalidMixVolumeError`: Raised when an invalid mix volume value is provided.
 
 ## Example
 
