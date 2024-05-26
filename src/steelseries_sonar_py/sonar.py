@@ -96,7 +96,6 @@ class Sonar:
             raise ex.InvalidMixVolumeError(mix_volume)
         
         url = f"{self.web_server_address}/chatMix?balance={json.dumps(mix_volume)}"
-        print(url)
-        volume_data = requests.put(url)
+        chat_mix_data = requests.put(url)
 
-        return json.loads(volume_data.text)
+        return json.loads(chat_mix_data.text)
