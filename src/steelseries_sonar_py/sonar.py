@@ -19,7 +19,7 @@ def streamer_mode_status(self):
         # clear the string from brackets
         streamer_mode = streamer_mode_raw.replace('"', '')
 
-        # check mode ("stream", "classic")
+        # check mode (stream, classic)
         if streamer_mode == "stream":
             streamer_mode = True
         else:
