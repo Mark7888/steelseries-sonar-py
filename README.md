@@ -3,9 +3,13 @@
 
 # SteelSeries Sonar Python API
 
+**Streamer mode currently in development!**
+
+
 ## Overview
 
-This Python package provides a convenient interface for interacting with the SteelSeries Sonar application API. The Sonar application allows users to control and display volumes for various audio channels.
+This Python package provides a convenient interface for interacting with the SteelSeries Sonar application API.    
+The Sonar application allows users to control and display volumes for various audio channels.
 
 ## Installation
 
@@ -27,11 +31,16 @@ To use this package, follow these steps:
 
 ### Initializing the Sonar Object
 
-The Sonar class accepts two optional parameters during initialization:
-`streamer_mode`: Set to True to use streamer mode (default is False).
-`app_data_path`: Specify a custom path for the SteelSeries Engine 3 coreProps.json file (default is the default installation path: `C:\\ProgramData\\SteelSeries\\SteelSeries Engine 3\\coreProps.json`).
+The Sonar class accepts two optional parameters during initialization:   
+`streamer_mode`: Set to True to use streamer mode (default is False).   
+`app_data_path`: Specify a custom path for the SteelSeries Engine 3 coreProps.json file   
+(default is the default installation path: `C:\\ProgramData\\SteelSeries\\SteelSeries Engine 3\\coreProps.json`).
 
 ```python
+sonar = Sonar(app_data_path="C:\\path\\to\\coreProps.json")
+```
+or
+```
 sonar = Sonar(streamer_mode=True, app_data_path="C:\\path\\to\\coreProps.json")
 ```
 
@@ -46,7 +55,8 @@ print(volume_data)
 
 ### Setting Volume for a Channel
 
-Set the volume for a specific channel. The `channel` parameter should be one of the following: "master", "game", "chatRender", "media", "aux", "chatCapture". The `volume` parameter should be a float between 0 and 1:
+Set the volume for a specific channel. The `channel` parameter should be one of the following:   
+`master`, `game`, `chatRender`, `media`, `aux`, `chatCapture`. The `volume` parameter should be a float between 0 and 1:
 
 ```python
 channel = "master"
@@ -58,7 +68,8 @@ print(result)
 
 ### Muting/Unmuting a Channel
 
-Toggle mute status for a specific channel. The `channel` parameter should be one of the following: `master`, `game`, `chatRender`, `media`, `aux`, `chatCapture`. The `muted` parameter should be a boolean indicating whether to mute (`True`) or unmute (`False`) the channel:
+Toggle mute status for a specific channel. The `channel` parameter should be one of the following:   
+`master`, `game`, `chatRender`, `media`, `aux`, `chatCapture`. The `muted` parameter should be a boolean indicating whether to mute (`True`) or unmute (`False`) the channel:
 
 ```python
 channel = "game"
@@ -79,7 +90,9 @@ print(result)
 
 ## Exceptions
 
-The package introduces a set of exceptions that might be raised during usage. It is advisable to handle these exceptions accordingly in your code. You can import them from `steelseries_sonar_py.exceptions`. Here is the list of potential exceptions:
+The package introduces a set of exceptions that might be raised during usage.    
+It is advisable to handle these exceptions accordingly in your code.   
+You can import them from `steelseries_sonar_py.exceptions`. Here is the list of potential exceptions:
 
 - `EnginePathNotFoundError`: Raised when SteelSeries Engine 3 is not installed or not in the default location.
 - `ServerNotAccessibleError`: Raised when the SteelSeries server is not accessible. Provides the HTTP status code.
@@ -101,7 +114,7 @@ from steelseries_sonar_py.exceptions import EnginePathNotFoundError
 
 # Initialize Sonar object
 try:
-    sonar = Sonar(streamer_mode=False, app_data_path="C:\\path\\to\\coreProps.json")
+    sonar = Sonar(app_data_path="C:\\path\\to\\coreProps.json")
 except EnginePathNotFoundError:
     print("Engine not found!")
     quit()
