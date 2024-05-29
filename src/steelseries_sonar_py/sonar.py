@@ -16,7 +16,7 @@ def streamer_mode_status(self):
         # check if streamer mode is enabled (returns "stream", "classic")
         streamer_mode_raw = requests.get(web_server_address + "/mode/", verify=False).text
 
-        # clear the string from brackets
+        # clear the string from quotation marks
         streamer_mode = streamer_mode_raw.replace('"', '')
 
         # check mode (stream, classic)
