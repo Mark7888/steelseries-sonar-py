@@ -99,3 +99,4 @@ class Sonar:
         chat_mix_data = requests.put(url)
 
         return json.loads(chat_mix_data.text)
+
