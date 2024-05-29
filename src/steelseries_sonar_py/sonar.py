@@ -13,7 +13,7 @@ def streamer_mode_status(self):
         # get the raw web server address
         web_server_address = web_server_address_raw.json()["subApps"]["sonar"]["metadata"]["webServerAddress"]
 
-        # check if streamer mode is enabled (returns true or false)
+        # check if streamer mode is enabled (returns "stream", "classic")
         streamer_mode_raw = requests.get(web_server_address + "/mode/", verify=False).text
 
         # clear the string from brackets
