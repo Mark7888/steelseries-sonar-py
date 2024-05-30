@@ -45,7 +45,7 @@ class Sonar:
         "coreProps.json",
     )
 
-    def __init__(self, streamer_mode=None, app_data_path=None):
+    def __init__(self, app_data_path=None, streamer_mode=None):
         requests.packages.urllib3.disable_warnings()
 
         if app_data_path is not None:
