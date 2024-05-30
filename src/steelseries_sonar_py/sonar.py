@@ -28,7 +28,7 @@ class Sonar:
 
         if streamer_mode is None:
             # get the streamer mode using a request to the server
-            self.streamer_mode = self.is_streamer_mode(self)
+            self.streamer_mode = self.is_streamer_mode()
         if self.streamer_mode:
             self.volume_path = "/volumeSettings/streamer/streaming/master/volume"
 
