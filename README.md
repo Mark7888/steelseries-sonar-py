@@ -40,7 +40,7 @@ The Sonar class accepts two optional parameters during initialization:
 sonar = Sonar(app_data_path="C:\\path\\to\\coreProps.json")
 ```
 or
-```
+```python
 sonar = Sonar(app_data_path="C:\\path\\to\\coreProps.json", streamer_mode=True)
 ```
 
