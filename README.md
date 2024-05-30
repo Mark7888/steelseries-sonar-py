@@ -41,7 +41,7 @@ sonar = Sonar(app_data_path="C:\\path\\to\\coreProps.json")
 ```
 or
 ```
-sonar = Sonar(streamer_mode=True, app_data_path="C:\\path\\to\\coreProps.json")
+sonar = Sonar(app_data_path="C:\\path\\to\\coreProps.json", streamer_mode=True)
 ```
 
 ### Retrieving Volume Information
