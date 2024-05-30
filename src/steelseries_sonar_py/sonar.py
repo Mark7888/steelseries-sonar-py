@@ -5,34 +5,6 @@ import os
 from . import exceptions as ex
 
 
-def streamer_mode_status(self):
-    try:
-        # get the "web server address" from "https://127.0.0.1:6327/subApps" (default address)
-        web_server_address_raw = requests.get("https://127.0.0.1:6327/subApps", verify=False)
-
-        # get the raw web server address
-        web_server_address = web_server_address_raw.json()["subApps"]["sonar"]["metadata"]["webServerAddress"]
-
-        # check if streamer mode is enabled (returns "stream", "classic")
-        streamer_mode_raw = requests.get(web_server_address + "/mode/", verify=False).text
-
-        # clear the string from quotation marks
-        streamer_mode = streamer_mode_raw.replace('"', '')
-
-        # check mode (stream, classic)
-        if streamer_mode == "stream":
-            streamer_mode = True
-        else:
-            streamer_mode = False
-    
-    except:
-        # revert to the default "streamer_mode = False" (not fatal)
-        return False
-    
-    finally:
-        # return result
-        return streamer_mode
-
 
 class Sonar:
     # chatCapture = mic
@@ -56,10 +28,36 @@ class Sonar:
 
         if streamer_mode is None:
             # get the streamer mode using a request to the server
-            self.streamer_mode = streamer_mode_status(self)
+            self.streamer_mode = is_streamer_mode(self)
         if self.streamer_mode:
             self.volume_path = "/volumeSettings/streamer/streaming/master/volume"
 
+    def is_streamer_mode(self):
+        try:
+            # get the "web server address" from "https://127.0.0.1:6327/subApps" (default address)
+            web_server_address_raw = requests.get("https://127.0.0.1:6327/subApps", verify=False)
+    
+            # get the raw web server address
+            web_server_address = web_server_address_raw.json()["subApps"]["sonar"]["metadata"]["webServerAddress"]
+
+            # check if streamer mode is enabled (returns "stream", "classic")
+            streamer_mode_raw = requests.get(web_server_address + "/mode/", verify=False).text
+
+            # clear the string from quotation marks
+            streamer_mode = streamer_mode_raw.replace('"', '')
+
+            # check mode (stream, classic)
+            if streamer_mode == "stream":
+                streamer_mode = True
+            else:
+                streamer_mode = False
+        except:
+            # revert to the default "streamer_mode = False" (not fatal)
+            return False
+        finally:
+            # return result
+            return streamer_mode
+    
     def load_base_url(self):
         if not os.path.exists(self.app_data_path):
             raise ex.EnginePathNotFoundError()
