@@ -5,6 +5,7 @@ import os
 from . import exceptions as ex
 
 
+
 class Sonar:
     # chatCapture = mic
     channel_names = ["master", "game", "chatRender", "media", "aux", "chatCapture"]
@@ -16,12 +17,8 @@ class Sonar:
         "coreProps.json",
     )
 
-    def __init__(self, streamer_mode=False, app_data_path=None):
+    def __init__(self, app_data_path=None, streamer_mode=None):
         requests.packages.urllib3.disable_warnings()
-
-        self.streamer_mode = streamer_mode
-        if self.streamer_mode:
-            self.volume_path = "/volumeSettings/streamer/monitoring"
 
         if app_data_path is not None:
             self.app_data_path = app_data_path
@@ -29,6 +26,38 @@ class Sonar:
         self.load_base_url()
         self.load_server_address()
 
+        if streamer_mode is None:
+            # get the streamer mode using a request to the server
+            self.streamer_mode = self.is_streamer_mode()
+        if self.streamer_mode:
+            self.volume_path = "/volumeSettings/streamer/streaming/master/volume"
+
+    def is_streamer_mode(self):
+        try:
+            # get the "web server address" from "https://127.0.0.1:6327/subApps" (default address)
+            web_server_address_raw = requests.get("https://127.0.0.1:6327/subApps", verify=False)
+    
+            # get the raw web server address
+            web_server_address = web_server_address_raw.json()["subApps"]["sonar"]["metadata"]["webServerAddress"]
+
+            # check if streamer mode is enabled (returns "stream", "classic")
+            streamer_mode_raw = requests.get(web_server_address + "/mode/", verify=False).text
+
+            # clear the string from quotation marks
+            streamer_mode = streamer_mode_raw.replace('"', '')
+
+            # check mode (stream, classic)
+            if streamer_mode == "stream":
+                streamer_mode = True
+            else:
+                streamer_mode = False
+        except:
+            # revert to the default "streamer_mode = False" (not fatal)
+            return False
+        finally:
+            # return result
+            return streamer_mode
+    
     def load_base_url(self):
         if not os.path.exists(self.app_data_path):
             raise ex.EnginePathNotFoundError()
@@ -60,7 +89,8 @@ class Sonar:
             raise ex.WebServerAddressNotFoundError()
 
     def get_volume_data(self):
-        volume_info_url = self.web_server_address + self.volume_path
+        # "volumeSettings/streamer" displays streamer and classic volume (everything)
+        volume_info_url = self.web_server_address + "/volumeSettings/streamer"
         volume_data = requests.get(volume_info_url)
         if volume_data.status_code != 200:
             raise ex.ServerNotAccessibleError(volume_data.status_code)
@@ -96,7 +126,6 @@ class Sonar:
             raise ex.InvalidMixVolumeError(mix_volume)
         
         url = f"{self.web_server_address}/chatMix?balance={json.dumps(mix_volume)}"
-        print(url)
-        volume_data = requests.put(url)
+        chat_mix_data = requests.put(url)
 
-        return json.loads(volume_data.text)
+        return json.loads(chat_mix_data.text)
