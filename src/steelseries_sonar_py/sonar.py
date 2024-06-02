@@ -107,7 +107,16 @@ class Sonar:
 
         return json.loads(mute_data.text)
 
-    def chat_mix(self, mix_volume):
+    def get_chat_mix_data(self):
+        chat_mix_url = self.web_server_address + "/chatMix"
+
+        chat_mix_data = requests.get(chat_mix_url)
+        if chat_mix_data.status_code != 200:
+            raise ex.ServerNotAccessibleError(chat_mix_data.status_code)
+
+        return json.loads(chat_mix_data.text)
+
+    def set_chat_mix(self, mix_volume):
         if mix_volume < -1 or mix_volume > 1:
             raise ex.InvalidMixVolumeError(mix_volume)
         

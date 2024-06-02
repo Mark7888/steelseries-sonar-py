@@ -81,10 +81,17 @@ print(result)
 
 ### Chatmix
 
-Chatmix value between `-1 and 1` to focus sound from the `game` or `chatRender` channel:
+Retrieve chat-mix data:
 
 ```python
-result = sonar.chat_mix(0.5)
+chatmix_data = sonar.get_chat_mix_data()
+print(chatmix_data)
+```
+
+Set chat-mix value between `-1 and 1` to focus sound from the `game` or `chatRender` channel:
+
+```python
+result = sonar.set_chat_mix(0.5)
 print(result)
 ```
 
@@ -134,8 +141,18 @@ channel = "game"
 muted = True
 result = sonar.mute_channel(channel, muted)
 print(f"Mute {channel}:", result)
+
+# Retrieve chat-mix data
+chatmix_data = sonar.get_chat_mix_data()
+print("Chatmix Data:", chatmix_data)
+
+# Set chat-mix value
+result = sonar.set_chat_mix(0.5)
+print("Set Chatmix:", result)
 ```
 
 ## Special Thanks
 
-Thanks to two contributors who made this package possible - [wex](https://github.com/wex/sonar-rev) for figuring out the API and [TotalPanther317](https://github.com/TotalPanther317/steelseries-sonar-py) for understanding streamer mode. Grateful for their efforts!
+Thanks to all contributors who made this package possible - [wex](https://github.com/wex/sonar-rev) for figuring out the API, [TotalPanther317](https://github.com/TotalPanther317/steelseries-sonar-py) for understanding streamer mode and [cookie](https://github.com/cookie0o) for features like chat mix and streamer mode detection. Grateful for their efforts!
+
+This documentation now reflects the latest changes and additions to the SteelSeries Sonar Python API.
