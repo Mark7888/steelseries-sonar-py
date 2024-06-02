@@ -33,31 +33,17 @@ class Sonar:
             self.volume_path = "/volumeSettings/streamer/streaming/master/volume"
 
     def is_streamer_mode(self):
-        try:
-            # get the "web server address" from "https://127.0.0.1:6327/subApps" (default address)
-            web_server_address_raw = requests.get("https://127.0.0.1:6327/subApps", verify=False)
-    
-            # get the raw web server address
-            web_server_address = web_server_address_raw.json()["subApps"]["sonar"]["metadata"]["webServerAddress"]
+        streamer_mode_data = requests.get(self.web_server_address + "/mode/", verify=False)
+        if streamer_mode_data.status_code != 200:
+            raise ex.ServerNotAccessibleError(streamer_mode_data.status_code)
 
-            # check if streamer mode is enabled (returns "stream", "classic")
-            streamer_mode_raw = requests.get(web_server_address + "/mode/", verify=False).text
+        if json.loads(streamer_mode_data.text) == "stream":
+            streamer_mode = True
+        else:
+            streamer_mode = False
 
-            # clear the string from quotation marks
-            streamer_mode = streamer_mode_raw.replace('"', '')
+        return streamer_mode
 
-            # check mode (stream, classic)
-            if streamer_mode == "stream":
-                streamer_mode = True
-            else:
-                streamer_mode = False
-        except:
-            # revert to the default "streamer_mode = False" (not fatal)
-            return False
-        finally:
-            # return result
-            return streamer_mode
-    
     def load_base_url(self):
         if not os.path.exists(self.app_data_path):
             raise ex.EnginePathNotFoundError()
