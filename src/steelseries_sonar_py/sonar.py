@@ -101,6 +101,8 @@ class Sonar:
 
         url = f"{self.web_server_address}{full_volume_path}/{channel}/Volume/{json.dumps(volume)}"
         volume_data = requests.put(url)
+        if volume_data.status_code != 200:
+            raise ex.ServerNotAccessibleError(volume_data.status_code)
 
         return json.loads(volume_data.text)
 
@@ -121,6 +123,8 @@ class Sonar:
 
         url = f"{self.web_server_address}{full_volume_path}/{channel}/{mute_keyword}/{json.dumps(muted)}"
         mute_data = requests.put(url)
+        if mute_data.status_code != 200:
+            raise ex.ServerNotAccessibleError(mute_data.status_code)
 
         return json.loads(mute_data.text)
 
@@ -139,5 +143,7 @@ class Sonar:
         
         url = f"{self.web_server_address}/chatMix?balance={json.dumps(mix_volume)}"
         chat_mix_data = requests.put(url)
+        if chat_mix_data.status_code != 200:
+            raise ex.ServerNotAccessibleError(chat_mix_data.status_code)
 
         return json.loads(chat_mix_data.text)
