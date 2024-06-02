@@ -38,6 +38,13 @@ class ChannelNotFoundError(Exception):
     def __str__(self):
         return f"Channel '{self.channel}' not found"
 
+class SliderNotFoundError(Exception):
+    def __init__(self, slider):
+        self.slider = slider
+
+    def __str__(self):
+        return f"Slider '{self.slider}' not found"
+
 
 class InvalidVolumeError(Exception):
     def __init__(self, volume):

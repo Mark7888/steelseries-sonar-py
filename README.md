@@ -5,7 +5,6 @@
 
 **Streamer mode currently in development!**
 
-
 ## Overview
 
 This Python package provides a convenient interface for interacting with the SteelSeries Sonar application API.    
@@ -56,26 +55,30 @@ print(volume_data)
 ### Setting Volume for a Channel
 
 Set the volume for a specific channel. The `channel` parameter should be one of the following:   
-`master`, `game`, `chatRender`, `media`, `aux`, `chatCapture`. The `volume` parameter should be a float between 0 and 1:
+`master`, `game`, `chatRender`, `media`, `aux`, `chatCapture`. The `volume` parameter should be a float between 0 and 1.   
+Additionally, an optional `streamer_slider` parameter can be provided, with values "streaming" (default) or "monitoring":
 
 ```python
 channel = "master"
 volume = 0.75
+streamer_slider = "streaming"  # or "monitoring"
 
-result = sonar.set_volume(channel, volume)
+result = sonar.set_volume(channel, volume, streamer_slider=streamer_slider)
 print(result)
 ```
 
 ### Muting/Unmuting a Channel
 
 Toggle mute status for a specific channel. The `channel` parameter should be one of the following:   
-`master`, `game`, `chatRender`, `media`, `aux`, `chatCapture`. The `muted` parameter should be a boolean indicating whether to mute (`True`) or unmute (`False`) the channel:
+`master`, `game`, `chatRender`, `media`, `aux`, `chatCapture`. The `muted` parameter should be a boolean indicating whether to mute (`True`) or unmute (`False`) the channel.   
+Additionally, an optional `streamer_slider` parameter can be provided, with values "streaming" (default) or "monitoring":
 
 ```python
 channel = "game"
 muted = True
+streamer_slider = "monitoring"
 
-result = sonar.mute_channel(channel, muted)
+result = sonar.mute_channel(channel, muted, streamer_slider=streamer_slider)
 print(result)
 ```
 
@@ -110,6 +113,7 @@ You can import them from `steelseries_sonar_py.exceptions`. Here is the list of 
 - `ChannelNotFoundError`: Raised when the specified channel is not found.
 - `InvalidVolumeError`: Raised when an invalid volume value is provided.
 - `InvalidMixVolumeError`: Raised when an invalid mix volume value is provided.
+- `SliderNotFoundError`: Raised when an unknown slider name is provided as `streamer_slider` value.
 
 ## Example
 
@@ -133,13 +137,15 @@ print("Volume Data:", volume_data)
 # Set volume for the 'master' channel
 channel = "master"
 volume = 0.8
-result = sonar.set_volume(channel, volume)
+streamer_slider = "streaming"
+result = sonar.set_volume(channel, volume, streamer_slider=streamer_slider)
 print(f"Set volume for {channel}:", result)
 
 # Mute the 'game' channel
 channel = "game"
 muted = True
-result = sonar.mute_channel(channel, muted)
+streamer_slider = "monitoring"
+result = sonar.mute_channel(channel, muted, streamer_slider=streamer_slider)
 print(f"Mute {channel}:", result)
 
 # Retrieve chat-mix data

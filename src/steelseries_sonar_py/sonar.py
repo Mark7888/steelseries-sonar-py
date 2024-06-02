@@ -9,6 +9,7 @@ from . import exceptions as ex
 class Sonar:
     # chatCapture = mic
     channel_names = ["master", "game", "chatRender", "media", "aux", "chatCapture"]
+    streamer_slider_names = ["streaming", "monitoring"]
     volume_path = "/volumeSettings/classic"
     app_data_path = os.path.join(
         os.environ["ProgramData"],
@@ -27,10 +28,10 @@ class Sonar:
         self.load_server_address()
 
         if streamer_mode is None:
-            # get the streamer mode using a request to the server
             self.streamer_mode = self.is_streamer_mode()
+
         if self.streamer_mode:
-            self.volume_path = "/volumeSettings/streamer/streaming/master/volume"
+            self.volume_path = "/volumeSettings/streamer"
 
     def is_streamer_mode(self):
         streamer_mode_data = requests.get(self.web_server_address + "/mode/", verify=False)
@@ -75,8 +76,8 @@ class Sonar:
             raise ex.WebServerAddressNotFoundError()
 
     def get_volume_data(self):
-        # "volumeSettings/streamer" displays streamer and classic volume (everything)
-        volume_info_url = self.web_server_address + "/volumeSettings/streamer"
+        volume_info_url = self.web_server_address + self.volume_path
+
         volume_data = requests.get(volume_info_url)
         if volume_data.status_code != 200:
             raise ex.ServerNotAccessibleError(volume_data.status_code)
@@ -84,25 +85,41 @@ class Sonar:
 
         return volume_data_json
 
-    def set_volume(self, channel, volume):
+    def set_volume(self, channel, volume, streamer_slider="streaming"):
         if channel not in self.channel_names:
             raise ex.ChannelNotFoundError(channel)
+
+        if self.streamer_mode and streamer_slider not in self.streamer_slider_names:
+            raise ex.SliderNotFoundError(streamer_slider)
 
         if volume < 0 or volume > 1:
             raise ex.InvalidVolumeError(volume)
 
-        url = f"{self.web_server_address}{self.volume_path}/{channel}/Volume/{json.dumps(volume)}"
+        full_volume_path = self.volume_path
+        if self.streamer_mode:
+            full_volume_path += f"/{streamer_slider}"
+
+        url = f"{self.web_server_address}{full_volume_path}/{channel}/Volume/{json.dumps(volume)}"
         volume_data = requests.put(url)
 
         return json.loads(volume_data.text)
 
-    def mute_channel(self, channel, muted):
+    def mute_channel(self, channel, muted, streamer_slider="streaming"):
         if channel not in self.channel_names:
             raise ex.ChannelNotFoundError(channel)
 
-        muted = muted == True
+        if self.streamer_mode and streamer_slider not in self.streamer_slider_names:
+            raise ex.SliderNotFoundError(streamer_slider)
 
-        url = f"{self.web_server_address}{self.volume_path}/{channel}/Mute/{json.dumps(muted)}"
+        muted = muted in [True, "true", "True", 1, "1"]
+
+        full_volume_path = self.volume_path
+        if self.streamer_mode:
+            full_volume_path += f"/{streamer_slider}"
+
+        mute_keyword = "isMuted" if self.streamer_mode else "Mute"
+
+        url = f"{self.web_server_address}{full_volume_path}/{channel}/{mute_keyword}/{json.dumps(muted)}"
         mute_data = requests.put(url)
 
         return json.loads(mute_data.text)
