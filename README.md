@@ -43,6 +43,27 @@ or
 sonar = Sonar(app_data_path="C:\\path\\to\\coreProps.json", streamer_mode=True)
 ```
 
+### Streamer Mode
+
+The SteelSeries Sonar Python API supports streamer mode, which allows users to manage two separate sliders: `streaming` and `monitoring`. These sliders enable fine-tuned control over different audio channels.
+
+To check if the streamer mode is enabled, use:
+
+```python
+is_streaming = sonar.is_streamer_mode()
+print("Is Streamer Mode:", is_streaming)
+```
+
+To enable or disable streamer mode, use:
+
+```python
+# Enable streamer mode
+sonar.set_streamer_mode(True)
+
+# Disable streamer mode
+sonar.set_streamer_mode(False)
+```
+
 ### Retrieving Volume Information
 
 Retrieve information about the current volume settings for all channels:

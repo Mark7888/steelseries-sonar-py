@@ -37,13 +37,22 @@ class Sonar:
         streamer_mode_data = requests.get(self.web_server_address + "/mode/", verify=False)
         if streamer_mode_data.status_code != 200:
             raise ex.ServerNotAccessibleError(streamer_mode_data.status_code)
+        
+        return json.loads(streamer_mode_data.text) == "stream"
 
-        if json.loads(streamer_mode_data.text) == "stream":
-            streamer_mode = True
+    def set_streamer_mode(self, streamer_mode):
+        if streamer_mode:
+            mode = "stream"
         else:
-            streamer_mode = False
+            mode = "classic"
 
-        return streamer_mode
+        url = f"{self.web_server_address}/mode/{mode}"
+        streamer_mode_data = requests.put(url)
+        if streamer_mode_data.status_code != 200:
+            raise ex.ServerNotAccessibleError(streamer_mode_data.status_code)
+
+        self.streamer_mode = json.loads(streamer_mode_data.text) == "stream"
+        return self.streamer_mode
 
     def load_base_url(self):
         if not os.path.exists(self.app_data_path):
