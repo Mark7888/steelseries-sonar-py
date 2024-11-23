@@ -21,7 +21,11 @@ jobs:
     - name: Get history and tags for SCM versioning to work
       run: |
         git fetch --prune --unshallow
-        git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+        if [ -z "$(git tag)" ]; then
+          echo "No tags found, skipping fetch tags"
+        else
+          git fetch --depth=1 origin +refs/tags/*:refs/tags/* || (echo "Failed to fetch tags" && exit 1)
+        fi
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
