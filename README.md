@@ -180,6 +180,6 @@ print("Set Chatmix:", result)
 
 ## Special Thanks
 
-Thanks to all contributors who made this package possible - [wex](https://github.com/wex/sonar-rev) for figuring out the API, [TotalPanther317](https://github.com/TotalPanther317/steelseries-sonar-py) for understanding streamer mode and [cookie](https://github.com/cookie0o) for features like chat mix and streamer mode detection. Grateful for their efforts!
+Thanks to all contributors who made this package possible - [wex](https://github.com/wex/sonar-rev) for figuring out the API, [TotalPanther317](https://github.com/TotalPanther317/steelseries-sonar-py) for understanding streamer mode and [raphael069](https://github.com/raphael069) for features like chat mix and streamer mode detection. Grateful for their efforts!
 
 This documentation now reflects the latest changes and additions to the SteelSeries Sonar Python API.
